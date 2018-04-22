@@ -14,7 +14,8 @@ public class Evaluator {
     }
 
     public void start() {
-
+        //Test
+        System.out.println("Evaluator start");
     }
 
     private void dealCardToPlayers() {

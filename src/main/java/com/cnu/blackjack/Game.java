@@ -1,6 +1,7 @@
 package com.cnu.blackjack;
 
 import com.cnu.blackjack.exceptions.DuplicatePlayerException;
+import com.cnu.blackjack.exceptions.NotEveryoneHaveStatusException;
 import com.cnu.blackjack.exceptions.NotEveyonePlacedBetException;
 import com.cnu.blackjack.exceptions.PlayerDoesNotExistException;
 
@@ -30,16 +31,32 @@ public class Game {
     }
 
     public void start() {
+
         playerList.forEach((name, player) -> {
             if (player.getCurrentBet() == 0) {
                 throw new NotEveyonePlacedBetException();
             }
         });
 
+        playerList.forEach((name, player) -> {
+            if (player.getStatus() == null) {
+                throw new NotEveryoneHaveStatusException();
+            }
+        });
+
+
+        // 딜러 생성
+
+        Evaluator evaluator = new Evaluator(this.playerList);
+        evaluator.start();
+        // evaluator.초기 카드분배(딜러,플레이어) 2장씩
+
 
     }
 
     public void placeBet(String name, int bet) {
+        //Test
+        System.out.println("place bet 호출");
         Player player = playerList.get(name);
         if (player == null) {
             throw new PlayerDoesNotExistException();
