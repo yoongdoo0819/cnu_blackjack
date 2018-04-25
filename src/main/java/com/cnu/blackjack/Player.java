@@ -16,17 +16,6 @@ public class Player {
         this.hand = hand;
     }
 
-    public void placeBet(int bet) {
-        if(balance < bet) {
-            throw new NotEnoughBalanceException();
-        }
-        balance -= bet;
-        currentBet = bet;
-    }
-
-    public Card hitCard() {
-        return hand.drawCard();
-    }
 
     public int getCurrentBet() {
         return currentBet;
@@ -43,4 +32,33 @@ public class Player {
     public void setStatus(PlayerStatus status) {
         this.status = status;
     }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
+
+    public void setCurrentBet(int currentBet) {
+        this.currentBet = currentBet;
+    }
+
+    public Hand getHand() {
+        return hand;
+    }
+
+    public void setHand(Hand hand) {
+        this.hand = hand;
+    }
+
+    public void placeBet(int bet) {
+        if(balance < bet) {
+            throw new NotEnoughBalanceException();
+        }
+        balance -= bet;
+        currentBet = bet;
+    }
+
+    public Card hitCard() {
+        return hand.drawCard();
+    }
+
 }

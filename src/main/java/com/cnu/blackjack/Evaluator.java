@@ -13,6 +13,22 @@ public class Evaluator {
         dealCardToPlayers();
     }
 
+    public Map<String, Player> getPlayerMap() {
+        return playerMap;
+    }
+
+    public void setPlayerMap(Map<String, Player> playerMap) {
+        this.playerMap = playerMap;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public void setDealer(Dealer dealer) {
+        this.dealer = dealer;
+    }
+
     public void start() {
         //Test
         System.out.println("Evaluator start");
@@ -23,5 +39,9 @@ public class Evaluator {
             player.hitCard();
             player.hitCard();
         });
+    }
+
+    public void calculateScore(Player player) {
+
     }
 }

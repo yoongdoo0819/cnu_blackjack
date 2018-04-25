@@ -2,8 +2,10 @@ package com.cnu.blackjack;
 
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import static org.hamcrest.CoreMatchers.is;
+
+import static org.junit.Assert.assertThat;
 
 public class EvaluatorTest {
 
@@ -13,7 +15,14 @@ public class EvaluatorTest {
         game.addPlayer("Player01",5000);
         game.addPlayer("Player02",5000);
 
-        //딜러도 플레이어로 넣어야함
+        //Evaluator 객체 생성시 플레이어에 대해 2장씩 카드 줌(생성자에서 dealCardToPlayer 호출)
+        //딜러는 카드 받을 필요 없음!!! 마지막에 Dealer.getDealerScore() 호출하면 17~24 사이 값 반환해줌
+        Evaluator evaluator = new Evaluator(game.getPlayerList());
+
+        //2장씩 받았는지 확인
+        for(Player player : evaluator.getPlayerMap().values()){
+            assertThat(player.getHand().getCardList().size(),is(2));
+        }
     }
 
     @Test
@@ -23,7 +32,12 @@ public class EvaluatorTest {
 
     @Test
     public void 각_플레이어는_16이하면_히트한다() { //카드 받는것
+        Game game = new Game(new Deck(1));
+        game.addPlayer("Player01",5000);
 
+        Evaluator evaluator = new Evaluator(game.getPlayerList());
+        Player player = evaluator.getPlayerMap().get("Player01");
+        evaluator.evaluate();
     }
 
     @Test
