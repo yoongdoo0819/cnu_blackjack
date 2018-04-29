@@ -12,22 +12,17 @@ public class EvaluatorTest {
     @Test
     public void 게임초기화시_모든플레이어는_2장의카드를_받는다() {
         Game game = new Game(new Deck(1));
-        game.addPlayer("Player01", 5000);
-        game.addPlayer("Player02", 5000);
+        game.addPlayer("Player01",5000);
+        game.addPlayer("Player02",5000);
 
         //Evaluator 객체 생성시 플레이어에 대해 2장씩 카드 줌(생성자에서 dealCardToPlayer 호출)
         //딜러는 카드 받을 필요 없음!!! 마지막에 Dealer.getDealerScore() 호출하면 17~24 사이 값 반환해줌
         Evaluator evaluator = new Evaluator(game.getPlayerList());
 
         //2장씩 받았는지 확인
-        for (Player player : evaluator.getPlayerMap().values()) {
-            assertThat(player.getHand().getCardList().size(), is(2));
+        for(Player player : evaluator.getPlayerMap().values()){
+            assertThat(player.getHand().getCardList().size(),is(2));
         }
-    }
-
-    @Test
-    public void 카드를_받으면_플레이어의_hand에_카드의값을_누적해준다(){
-
     }
 
     @Test
@@ -37,9 +32,22 @@ public class EvaluatorTest {
 
         Evaluator evaluator = new Evaluator(game.getPlayerList());
         Player player = evaluator.getPlayerMap().get("Player01");
-        //evaluator.evaluate();
+        int score = evaluator.evaluatePlayerScore(player);
+        if(score <= 16 ){
+            player.hitCard();
+            assertThat(player.getHand().getCardList().size(),is(3));
+        }else{
+            assertThat(player.getHand().getCardList().size(),is(2));
+        }
     }
 
+
+
+    @Test
+    public void 카드를_받으면_플레이어의_hand에_카드의값을_누적해준다(){
+
+    }
+     
     @Test
     public void 블랙잭이나오면_2배로_보상받고_해당_플레이어의_턴은_끝난다() {
 
